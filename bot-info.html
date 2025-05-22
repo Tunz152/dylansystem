@@ -56,10 +56,6 @@
       margin: 15px 0;
       box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
-    iframe {
-      margin-top: 20px;
-      max-width: 100%;
-    }
     a {
       color: #7289da;
       text-decoration: none;
@@ -85,8 +81,8 @@
   <div class="content">
     <div class="card">
       <h2>Bot Details</h2>
-      <img class="avatar" src="https://cdn.discordapp.com/avatars/1307939996300480595/0.png" alt="Bot Avatar">
-      <p><strong>Name:</strong> Dylan System</p>
+      <img id="botAvatar" class="avatar" src="" alt="Bot Avatar">
+      <p><strong>Name:</strong> <span id="botName">Loading...</span></p>
       <p><strong>ID:</strong> 1307939996300480595</p>
       <p><strong>Prefix:</strong> <code>d!</code></p>
       <p><strong>Features:</strong> Moderation, Logging, Giveaways, Auto Reply, AI Tools, and more.</p>
@@ -101,6 +97,22 @@
       </a>
     </div>
   </div>
+
+  <script>
+    const botId = "1307939996300480595";
+    fetch(`https://discord.com/api/v10/applications/${botId}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.icon) {
+          document.getElementById("botAvatar").src =
+            `https://cdn.discordapp.com/app-icons/${botId}/${data.icon}.png?size=256`;
+        } else {
+          document.getElementById("botAvatar").src =
+            "https://cdn-icons-png.flaticon.com/512/5968/5968756.png";
+        }
+        document.getElementById("botName").textContent = data.name;
+      });
+  </script>
 
 </body>
 </html>
